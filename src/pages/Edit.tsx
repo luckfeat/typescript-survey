@@ -7,7 +7,7 @@ import SurveyEditor from '../components/edit/SurveyEditor';
 import SurveyResponse from '../components/edit/SurveyResponse';
 
 const Wrapper = styled.div`
-  background-color: #f0f4f8;
+  background-color: #e5eef8;
   min-height: 100vh;
 `;
 
@@ -43,6 +43,10 @@ const StyledButton = styled(Button)<{ active: boolean }>`
     color: #007bff;
   }
 `;
+
+/**
+ * fetch survey with surveyId
+ */
 
 const Edit = () => {
   const { surveyId } = useParams();

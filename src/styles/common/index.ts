@@ -6,6 +6,14 @@ export const Container = styled.div`
   padding: 20px;
 `;
 
+export const SurveyTitleContainer = styled(Container)`
+  background: white;
+  border-top: 12px solid #007bff;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 20px;
+`;
+
 export const Heading = styled.h1`
   font-size: 28px;
   font-weight: 700;
