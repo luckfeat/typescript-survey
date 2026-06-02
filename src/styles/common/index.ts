@@ -3,12 +3,18 @@ import styled from '@emotion/styled';
 export const Container = styled.div`
   max-width: 770px;
   margin: 0 auto;
-  padding: 20px;
 `;
 
 export const SurveyTitleContainer = styled(Container)`
   background: white;
   border-top: 12px solid #007bff;
+  border-radius: 8px;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+`;
+
+export const SurveyQuestionContainer = styled(Container)`
+  background: white;
   border-radius: 8px;
   padding: 16px;
   margin-bottom: 20px;

@@ -6,7 +6,7 @@ export const surveysAtom = atom<Survey>({
   surveys: [
     {
       sectionIndex: 1,
-      question: [
+      questions: [
         {
           title: '단답형',
           type: 'short',
@@ -44,7 +44,7 @@ export const surveysAtom = atom<Survey>({
     },
     {
       sectionIndex: 2,
-      question: [
+      questions: [
         { title: '단답형', type: 'short', content: {} },
         { title: '장문형', type: 'long', content: {} },
         {

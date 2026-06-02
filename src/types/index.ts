@@ -1,27 +1,41 @@
 export interface Survey {
   id: string;
-  surveys: SurveySection[];
+  surveys: SurveySectionType[];
 }
 
-export interface SurveySection {
+export interface SurveySectionType {
   sectionIndex: number;
-  question: SurveyQuestion[];
-}
-
-export interface SurveyQuestion {
-  title: string;
-  type: SurveyQuestionType;
-  content:
-    | { shortText: string }
-    | { longText: string }
-    | { options: string[] }
-    | { start: number; end: number };
+  questions: SurveyQuestionType[];
 }
 
 export type SurveyQuestionType =
-  | 'short'
-  | 'long'
-  | 'multi'
-  | 'checkbox'
-  | 'dropdown'
-  | 'rating';
+  | {
+      title: string;
+      type: 'short';
+      content: { shortText: string };
+    }
+  | {
+      title: string;
+      type: 'long';
+      content: { longText: string };
+    }
+  | {
+      title: string;
+      type: 'multi';
+      content: { options: string[] };
+    }
+  | {
+      title: string;
+      type: 'checkbox';
+      content: { options: string[] };
+    }
+  | {
+      title: string;
+      type: 'dropdown';
+      content: { options: string[] };
+    }
+  | {
+      title: string;
+      type: 'rating';
+      content: { start: number; end: number };
+    };
