@@ -3,11 +3,10 @@ import {
   SurveyHeaderContainer,
   HighlightBar,
   HeaderHighlightBar,
-  Title,
-  Description,
 } from '../../styles/common';
 import type { SurveySectionType } from '../../types';
-import SurveyQuestionItem from './SurveyQuestion';
+import SurveyHeader from './SurveyHeader';
+import SurveyQuestion from './SurveyQuestion';
 
 interface SurveySectionProps {
   onClick: (e: React.MouseEvent) => void;
@@ -32,8 +31,7 @@ const SurveySection = ({ onClick, focus, survey }: SurveySectionProps) => {
             isFocused === `header-container-${sectionIndex}` ? 'active' : ''
           }
         />
-        <Title />
-        <Description />
+        <SurveyHeader />
       </SurveyHeaderContainer>
       {questions.map((question, index) => {
         return (
@@ -45,7 +43,7 @@ const SurveySection = ({ onClick, focus, survey }: SurveySectionProps) => {
                 isFocused === `question-container-${index}` ? 'active' : ''
               }
             />
-            <SurveyQuestionItem question={question} />
+            <SurveyQuestion question={question} />
           </SurveyQuestionContainer>
         );
       })}

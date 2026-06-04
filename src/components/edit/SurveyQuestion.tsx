@@ -4,7 +4,7 @@ interface SurveyQuestionProps {
   question: SurveyQuestionType;
 }
 
-const SurveyQuestionItem = ({ question }: SurveyQuestionProps) => {
+const SurveyQuestion = ({ question }: SurveyQuestionProps) => {
   switch (question.type) {
     case 'short':
       return (
@@ -72,4 +72,4 @@ const SurveyQuestionItem = ({ question }: SurveyQuestionProps) => {
   }
 };
 
-export default SurveyQuestionItem;
+export default SurveyQuestion;
