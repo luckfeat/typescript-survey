@@ -39,3 +39,10 @@ export type SurveyQuestionType =
       type: 'rating';
       content: { start: number; end: number };
     };
+
+export interface BaseQuestionProps<
+  T extends SurveyQuestionType = SurveyQuestionType,
+> {
+  question: T;
+  isFocused: boolean;
+}

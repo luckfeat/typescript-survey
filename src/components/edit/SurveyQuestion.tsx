@@ -1,72 +1,25 @@
-import type { SurveyQuestionType } from '../../types';
+import type { BaseQuestionProps } from '../../types';
+import CheckBoxQuestion from './question/CheckBoxQuestion';
+import DropDownQuestion from './question/DropDownQuestion';
+import LongQuestion from './question/LongQuestion';
+import MultiQuestion from './question/MultiQuestion';
+import RatingQuestion from './question/RatingQuestion';
+import ShortQuestion from './question/ShortQuestion';
 
-interface SurveyQuestionProps {
-  question: SurveyQuestionType;
-}
-
-const SurveyQuestion = ({ question }: SurveyQuestionProps) => {
+const SurveyQuestion = ({ question, isFocused }: BaseQuestionProps) => {
   switch (question.type) {
     case 'short':
-      return (
-        <>
-          <p>{question.title}</p>
-          <div>{question.content.shortText}</div>
-        </>
-      );
+      return <ShortQuestion question={question} />;
     case 'long':
-      return (
-        <>
-          <p>{question.title}</p>
-          <div>{question.content.longText}</div>
-        </>
-      );
+      return <LongQuestion question={question} />;
     case 'multi':
-      return (
-        <>
-          <p>{question.title}</p>
-          <ul>
-            {question.content.options.map((option) => (
-              <li key={option}>{option}</li>
-            ))}
-          </ul>
-        </>
-      );
+      return <MultiQuestion question={question} />;
     case 'checkbox':
-      return (
-        <>
-          <p>{question.title}</p>
-          <ul>
-            {question.content.options.map((option) => (
-              <li key={option}>
-                <label>
-                  <input type="checkbox" />
-                  {option}
-                </label>
-              </li>
-            ))}
-          </ul>
-        </>
-      );
+      return <CheckBoxQuestion question={question} />;
     case 'dropdown':
-      return (
-        <>
-          <p>{question.title}</p>
-          <select>
-            {question.content.options.map((option) => (
-              <option key={option}>{option}</option>
-            ))}
-          </select>
-        </>
-      );
+      return <DropDownQuestion question={question} />;
     case 'rating':
-      return (
-        <>
-          <p>{question.title}</p>
-          <div>
-            {question.content.start} ~ {question.content.end}
-          </div>
-        </>
-      );
+      return <RatingQuestion question={question} />;
     default:
       return null;
   }

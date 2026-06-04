@@ -1,10 +1,21 @@
 import { Title, Description } from '../../styles/common';
 
-const SurveyHeader = () => {
+interface SurveyHeaderProps {
+  isFocused: boolean;
+}
+
+const SurveyHeader = ({ isFocused }: SurveyHeaderProps) => {
   return (
     <>
-      <Title />
-      <Description />
+      {isFocused ? (
+        <></>
+      ) : (
+        <>
+          {' '}
+          <Title />
+          <Description />
+        </>
+      )}
     </>
   );
 };
