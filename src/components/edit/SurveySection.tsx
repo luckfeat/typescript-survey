@@ -1,20 +1,16 @@
 import styled from '@emotion/styled';
 import {
   SurveyQuestionContainer,
-  SurveyTitleContainer,
+  SurveyHeaderContainer,
 } from '../../styles/common';
 import type { SurveySectionType } from '../../types';
 import SurveyQuestionItem from './SurveyQuestion';
 
 interface SurveySectionProps {
+  onClick: (e: React.MouseEvent) => void;
+  focus: HTMLElement | null;
   survey: SurveySectionType;
 }
-
-const InputWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
 
 const Title = styled.input`
   width: calc(100% - 32px);
@@ -49,23 +45,33 @@ const Description = styled.input`
   }
 `;
 
-const SurveySection = ({ survey }: SurveySectionProps) => {
+const SurveySection = ({ onClick, focus, survey }: SurveySectionProps) => {
   const { sectionIndex, questions } = survey;
+  const isFocused = focus?.dataset.containerId;
   /**
    * if more than one section, display section index
+   * highlight focused container
    */
   return (
-    <section>
+    <section onClick={onClick}>
       <h3>{sectionIndex}</h3>
-      <SurveyTitleContainer>
-        <InputWrapper>
-          <Title />
-          <Description />
-        </InputWrapper>
-      </SurveyTitleContainer>
-      {questions.map((question) => {
+      <SurveyHeaderContainer
+        data-container-id={`header-container-${sectionIndex}`}
+        className={
+          isFocused === `header-container-${sectionIndex}` ? 'active' : ''
+        }
+      >
+        <Title />
+        <Description />
+      </SurveyHeaderContainer>
+      {questions.map((question, index) => {
         return (
-          <SurveyQuestionContainer>
+          <SurveyQuestionContainer
+            data-container-id={`question-container-${index}`}
+            className={
+              isFocused === `question-container-${index}` ? 'active' : ''
+            }
+          >
             <SurveyQuestionItem question={question} />
           </SurveyQuestionContainer>
         );

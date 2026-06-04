@@ -5,12 +5,21 @@ export const Container = styled.div`
   margin: 0 auto;
 `;
 
-export const SurveyTitleContainer = styled(Container)`
+export const SurveyHeaderContainer = styled(Container)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   background: white;
   border-top: 12px solid #007bff;
   border-radius: 8px;
   padding-bottom: 12px;
   margin-bottom: 20px;
+  border-left: 4px solid transparent;
+  transition: border-left-color 0.2s ease;
+
+  &.active {
+    border-left-color: #ffd700;
+  }
 `;
 
 export const SurveyQuestionContainer = styled(Container)`
@@ -18,6 +27,12 @@ export const SurveyQuestionContainer = styled(Container)`
   border-radius: 8px;
   padding: 16px;
   margin-bottom: 20px;
+  border-left: 4px solid transparent;
+  transition: border-left-color 0.2s ease;
+
+  &.active {
+    border-left-color: #ffd700;
+  }
 `;
 
 export const Heading = styled.h1`
