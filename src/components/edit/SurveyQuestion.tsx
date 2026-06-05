@@ -9,17 +9,17 @@ import ShortQuestion from './question/ShortQuestion';
 const SurveyQuestion = ({ question, isFocused }: BaseQuestionProps) => {
   switch (question.type) {
     case 'short':
-      return <ShortQuestion question={question} />;
+      return <ShortQuestion question={question} isFocused={isFocused} />;
     case 'long':
-      return <LongQuestion question={question} />;
+      return <LongQuestion question={question} isFocused={isFocused} />;
     case 'multi':
-      return <MultiQuestion question={question} />;
+      return <MultiQuestion question={question} isFocused={isFocused} />;
     case 'checkbox':
-      return <CheckBoxQuestion question={question} />;
+      return <CheckBoxQuestion question={question} isFocused={isFocused} />;
     case 'dropdown':
-      return <DropDownQuestion question={question} />;
+      return <DropDownQuestion question={question} isFocused={isFocused} />;
     case 'rating':
-      return <RatingQuestion question={question} />;
+      return <RatingQuestion question={question} isFocused={isFocused} />;
     default:
       return null;
   }

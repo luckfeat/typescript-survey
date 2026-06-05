@@ -2,10 +2,12 @@ import { atom } from 'jotai';
 import type { Survey } from '../../types';
 
 export const surveysAtom = atom<Survey>({
-  id: 'test',
+  id: '1234',
   surveys: [
     {
       sectionIndex: 1,
+      title: 'test',
+      description: 'this is a test for a google survey clone',
       questions: [
         {
           title: '단답형',
@@ -44,6 +46,8 @@ export const surveysAtom = atom<Survey>({
     },
     {
       sectionIndex: 2,
+      title: 'another test',
+      description: 'this is an another test survey for google clone',
       questions: [
         { title: '단답형', type: 'short', content: {} },
         { title: '장문형', type: 'long', content: {} },

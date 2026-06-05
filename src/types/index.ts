@@ -5,6 +5,8 @@ export interface Survey {
 
 export interface SurveySectionType {
   sectionIndex: number;
+  title: string;
+  description: string;
   questions: SurveyQuestionType[];
 }
 
@@ -40,9 +42,7 @@ export type SurveyQuestionType =
       content: { start: number; end: number };
     };
 
-export interface BaseQuestionProps<
-  T extends SurveyQuestionType = SurveyQuestionType,
-> {
-  question: T;
-  isFocused: boolean;
-}
+export type QuestionByType<T extends SurveyQuestionType['type']> = Extract<
+  SurveyQuestionType,
+  { type: T }
+>;

@@ -1,12 +1,25 @@
-const DropDownQuestion = ({ question }) => {
+import type { QuestionByType } from '../../../types';
+
+interface DropDownQuestionProps {
+  question: QuestionByType<'dropdown'>;
+  isFocused: boolean;
+}
+
+const DropDownQuestion = ({ question, isFocused }: DropDownQuestionProps) => {
   return (
     <>
-      <p>{question.title}</p>
-      <select>
-        {question.content.options.map((option) => (
-          <option key={option}>{option}</option>
-        ))}
-      </select>
+      {isFocused ? (
+        <></>
+      ) : (
+        <>
+          <p>{question.title}</p>
+          <select>
+            {question.content.options.map((option) => (
+              <option key={option}>{option}</option>
+            ))}
+          </select>
+        </>
+      )}
     </>
   );
 };

@@ -1,10 +1,23 @@
-const RatingQuestion = ({ question }) => {
+import type { QuestionByType } from '../../../types';
+
+interface RatingQuestionProps {
+  question: QuestionByType<'rating'>;
+  isFocused: boolean;
+}
+
+const RatingQuestion = ({ question, isFocused }: RatingQuestionProps) => {
   return (
     <>
-      <p>{question.title}</p>
-      <div>
-        {question.content.start} ~ {question.content.end}
-      </div>
+      {isFocused ? (
+        <></>
+      ) : (
+        <>
+          <p>{question.title}</p>
+          <div>
+            {question.content.start} ~ {question.content.end}
+          </div>
+        </>
+      )}
     </>
   );
 };

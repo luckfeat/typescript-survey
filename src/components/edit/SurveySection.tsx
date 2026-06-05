@@ -15,7 +15,7 @@ interface SurveySectionProps {
 }
 
 const SurveySection = ({ onClick, focus, survey }: SurveySectionProps) => {
-  const { sectionIndex, questions } = survey;
+  const { sectionIndex, title, description, questions } = survey;
   const isFocused =
     focus?.dataset.containerId === `header-container-${sectionIndex}`;
   /**
@@ -28,7 +28,11 @@ const SurveySection = ({ onClick, focus, survey }: SurveySectionProps) => {
         data-container-id={`header-container-${sectionIndex}`}
       >
         <HeaderHighlightBar className={isFocused ? 'active' : ''} />
-        <SurveyHeader isFocused={isFocused} />
+        <SurveyHeader
+          title={title}
+          description={description}
+          isFocused={isFocused}
+        />
       </SurveyHeaderContainer>
       {questions.map((question, index) => {
         const isFocused =
