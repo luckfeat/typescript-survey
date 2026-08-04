@@ -1,8 +1,10 @@
 import styled from '@emotion/styled';
 
 export const Container = styled.div`
+  width: 100%;
   max-width: 770px;
   margin: 0 auto;
+  box-sizing: border-box;
 `;
 
 export const HighlightBar = styled.div`
@@ -47,6 +49,7 @@ export const SurveyHeaderContainer = styled(Container)`
   border-radius: 8px;
   padding-bottom: 12px;
   margin-bottom: 20px;
+  overflow: visible;
 `;
 
 export const SurveyQuestionContainer = styled(Container)`
@@ -55,6 +58,7 @@ export const SurveyQuestionContainer = styled(Container)`
   border-radius: 8px;
   padding: 16px;
   margin-bottom: 20px;
+  box-sizing: border-box;
 `;
 
 export const Heading = styled.h1`
@@ -95,8 +99,10 @@ export const Title = styled.input`
   border-bottom: 1px solid #e0e0e0;
   font-family: inherit;
   box-sizing: border-box;
+  background-color: transparent;
+  color: #333;
 
-  &:focus {
+  &:focus-visible {
     outline: none;
     border-bottom-color: #007bff;
   }
@@ -111,8 +117,10 @@ export const Description = styled.input`
   border-bottom: 1px solid #e0e0e0;
   font-family: inherit;
   box-sizing: border-box;
+  background-color: transparent;
+  color: #4b5563;
 
-  &:focus {
+  &:focus-visible {
     outline: none;
     border-bottom-color: #007bff;
   }

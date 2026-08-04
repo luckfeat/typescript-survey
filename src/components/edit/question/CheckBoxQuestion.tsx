@@ -12,7 +12,6 @@ const CheckBoxQuestion = ({ question, isFocused }: CheckBoxQuestionProps) => {
         <></>
       ) : (
         <>
-          <p>{question.title}</p>
           <ul>
             {question.content.options.map((option) => (
               <li key={option}>

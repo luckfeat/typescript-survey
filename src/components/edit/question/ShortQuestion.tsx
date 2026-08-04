@@ -12,7 +12,6 @@ const ShortQuestion = ({ question, isFocused }: ShortQuestionProps) => {
         <></>
       ) : (
         <>
-          <p>{question.title}</p>
           <div>{question.content.shortText}</div>
         </>
       )}

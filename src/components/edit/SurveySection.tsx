@@ -14,35 +14,43 @@ interface SurveySectionProps {
   survey: SurveySectionType;
 }
 
+const getHeaderContainerId = (sectionIndex: number) =>
+  `header-container-${sectionIndex}`;
+
+const getQuestionContainerId = (sectionIndex: number, questionIndex: number) =>
+  `question-container-${sectionIndex}-${questionIndex}`;
+
 const SurveySection = ({ onClick, focus, survey }: SurveySectionProps) => {
   const { sectionIndex, title, description, questions } = survey;
-  const isFocused =
-    focus?.dataset.containerId === `header-container-${sectionIndex}`;
+  const isFocused = (containerId: string) => focusedContainerId === containerId;
+  const focusedContainerId = focus?.dataset.containerId;
+  const headerContainerId = getHeaderContainerId(sectionIndex);
+  const isHeaderFocused = isFocused(headerContainerId);
   /**
    * if more than one section, display section index
    */
   return (
     <section onClick={onClick}>
       <h3>{sectionIndex}</h3>
-      <SurveyHeaderContainer
-        data-container-id={`header-container-${sectionIndex}`}
-      >
-        <HeaderHighlightBar className={isFocused ? 'active' : ''} />
+      <SurveyHeaderContainer data-container-id={headerContainerId}>
+        <HeaderHighlightBar className={isHeaderFocused ? 'active' : ''} />
         <SurveyHeader
           title={title}
           description={description}
-          isFocused={isFocused}
+          isFocused={isHeaderFocused}
         />
       </SurveyHeaderContainer>
       {questions.map((question, index) => {
-        const isFocused =
-          focus?.dataset.containerId === `question-container-${index}`;
+        const questionContainerId = getQuestionContainerId(sectionIndex, index);
+        const isQuestionFocused = isFocused(questionContainerId);
+
         return (
           <SurveyQuestionContainer
-            data-container-id={`question-container-${index}`}
+            key={questionContainerId}
+            data-container-id={questionContainerId}
           >
-            <HighlightBar className={isFocused ? 'active' : ''} />
-            <SurveyQuestion question={question} isFocused={isFocused} />
+            <HighlightBar className={isQuestionFocused ? 'active' : ''} />
+            <SurveyQuestion question={question} isFocused={isQuestionFocused} />
           </SurveyQuestionContainer>
         );
       })}

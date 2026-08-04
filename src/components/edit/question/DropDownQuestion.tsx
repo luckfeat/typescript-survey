@@ -12,7 +12,6 @@ const DropDownQuestion = ({ question, isFocused }: DropDownQuestionProps) => {
         <></>
       ) : (
         <>
-          <p>{question.title}</p>
           <select>
             {question.content.options.map((option) => (
               <option key={option}>{option}</option>

@@ -9,6 +9,8 @@ import SurveyResponse from '../components/edit/SurveyResponse';
 const Wrapper = styled.div`
   background-color: #e5eef8;
   min-height: 100vh;
+  min-height: 100dvh;
+  box-sizing: border-box;
 `;
 
 const Navigation = styled.nav`
@@ -26,6 +28,16 @@ const NavButtonContainer = styled(Container)`
   align-items: center;
   justify-content: center;
   padding: 0;
+`;
+
+const SurveyContent = styled(Container)`
+  max-width: 818px;
+  padding: 24px clamp(16px, 3vw, 24px)
+    calc(48px + env(safe-area-inset-bottom));
+
+  @media (max-width: 520px) {
+    padding-top: 16px;
+  }
 `;
 
 const StyledButton = styled(Button)<{ active: boolean }>`
@@ -77,9 +89,9 @@ const Edit = () => {
           </StyledButton>
         </NavButtonContainer>
       </Navigation>
-      <Container>
+      <SurveyContent>
         {panel === 'survey' ? <SurveyEditor /> : <SurveyResponse />}
-      </Container>
+      </SurveyContent>
     </Wrapper>
   );
 };

@@ -12,7 +12,6 @@ const LongQuestion = ({ question, isFocused }: LongQuestionProps) => {
         <></>
       ) : (
         <>
-          <p>{question.title}</p>
           <div>{question.content.longText}</div>
         </>
       )}

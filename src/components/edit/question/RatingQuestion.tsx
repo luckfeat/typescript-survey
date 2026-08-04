@@ -12,7 +12,6 @@ const RatingQuestion = ({ question, isFocused }: RatingQuestionProps) => {
         <></>
       ) : (
         <>
-          <p>{question.title}</p>
           <div>
             {question.content.start} ~ {question.content.end}
           </div>

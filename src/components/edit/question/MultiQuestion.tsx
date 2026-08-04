@@ -12,7 +12,6 @@ const MultiQuestion = ({ question, isFocused }: MultiQuestionProps) => {
         <></>
       ) : (
         <>
-          <p>{question.title}</p>
           <ul>
             {question.content.options.map((option) => (
               <li key={option}>{option}</li>
