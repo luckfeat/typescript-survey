@@ -11,8 +11,8 @@ const SurveyHeader = ({ title, description, isFocused }: SurveyHeaderProps) => {
     <>
       {isFocused ? (
         <>
-          <Title placeholder={title} value={title} />
-          <Description placeholder={description} value={description} />
+          <Title placeholder={title} />
+          <Description placeholder={description} />
         </>
       ) : (
         <>

@@ -37,11 +37,6 @@ export const surveysAtom = atom<Survey>({
           type: 'dropdown',
           content: { options: ['제주도', '홍콩', '싱가폴', '일본'] },
         },
-        {
-          title: '배율',
-          type: 'rating',
-          content: { start: 0, end: 5 },
-        },
       ],
     },
     {
@@ -49,8 +44,8 @@ export const surveysAtom = atom<Survey>({
       title: 'another test',
       description: 'this is an another test survey for google clone',
       questions: [
-        { title: '단답형', type: 'short', content: {} },
-        { title: '장문형', type: 'long', content: {} },
+        { title: '단답형', type: 'short', content: { shortText: '' } },
+        { title: '장문형', type: 'long', content: { longText: '' } },
         {
           title: '객관식',
           type: 'multi',
@@ -65,11 +60,6 @@ export const surveysAtom = atom<Survey>({
           title: '드롭다운',
           type: 'dropdown',
           content: { options: ['제주도', '홍콩', '싱가폴', '일본'] },
-        },
-        {
-          title: '배율',
-          type: 'rating',
-          content: { start: 0, end: 5 },
         },
       ],
     },

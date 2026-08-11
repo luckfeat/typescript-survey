@@ -9,6 +9,7 @@ import SurveyHeader from './SurveyHeader';
 import SurveyQuestion from './SurveyQuestion';
 
 interface SurveySectionProps {
+  length: number;
   onClick: (e: React.MouseEvent) => void;
   focus: HTMLElement | null;
   survey: SurveySectionType;
@@ -20,18 +21,22 @@ const getHeaderContainerId = (sectionIndex: number) =>
 const getQuestionContainerId = (sectionIndex: number, questionIndex: number) =>
   `question-container-${sectionIndex}-${questionIndex}`;
 
-const SurveySection = ({ onClick, focus, survey }: SurveySectionProps) => {
+const SurveySection = ({
+  length,
+  onClick,
+  focus,
+  survey,
+}: SurveySectionProps) => {
   const { sectionIndex, title, description, questions } = survey;
   const isFocused = (containerId: string) => focusedContainerId === containerId;
   const focusedContainerId = focus?.dataset.containerId;
   const headerContainerId = getHeaderContainerId(sectionIndex);
   const isHeaderFocused = isFocused(headerContainerId);
-  /**
-   * if more than one section, display section index
-   */
   return (
     <section onClick={onClick}>
-      <h3>{sectionIndex}</h3>
+      <h4>
+        {length} 중 {sectionIndex} 섹션
+      </h4>
       <SurveyHeaderContainer data-container-id={headerContainerId}>
         <HeaderHighlightBar className={isHeaderFocused ? 'active' : ''} />
         <SurveyHeader

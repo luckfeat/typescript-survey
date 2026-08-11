@@ -1,14 +1,15 @@
 import { useRef, useState } from 'react';
-import type { Dispatch, SetStateAction } from 'react';
-import type { SurveyQuestionType } from '../../types';
+import { useSetAtom } from 'jotai';
+import { surveysAtom } from '../../stores/survey/atom';
 import styled from '@emotion/styled';
 import CheckBoxQuestion from './question/CheckBoxQuestion';
 import DropDownQuestion from './question/DropDownQuestion';
 import LongQuestion from './question/LongQuestion';
 import MultiQuestion from './question/MultiQuestion';
-import RatingQuestion from './question/RatingQuestion';
 import ShortQuestion from './question/ShortQuestion';
 import useOutsideClick from '../../hooks/useOutsideClick';
+import type { Dispatch, SetStateAction } from 'react';
+import type { SurveyQuestionType } from '../../types';
 
 type QuestionType = SurveyQuestionType['type'];
 
@@ -19,7 +20,6 @@ interface QuestionProps {
 
 interface DropdownProps {
   selected: boolean;
-  setType: Dispatch<SetStateAction<QuestionType>>;
   setSelected: Dispatch<SetStateAction<boolean>>;
   onClick: () => void;
 }
@@ -126,35 +126,7 @@ const DropdownItem = styled.li`
   }
 `;
 
-const Question = ({ question, isFocused }: QuestionProps) => {
-  switch (question.type) {
-    case 'short':
-      return <ShortQuestion question={question} isFocused={isFocused} />;
-    case 'long':
-      return <LongQuestion question={question} isFocused={isFocused} />;
-    case 'multi':
-      return <MultiQuestion question={question} isFocused={isFocused} />;
-    case 'checkbox':
-      return <CheckBoxQuestion question={question} isFocused={isFocused} />;
-    case 'dropdown':
-      return <DropDownQuestion question={question} isFocused={isFocused} />;
-    case 'rating':
-      return <RatingQuestion question={question} isFocused={isFocused} />;
-    default:
-      return null;
-  }
-};
-
-const Dropdown = ({
-  selected,
-  setType,
-  onClick,
-  setSelected,
-}: DropdownProps) => {
-  const handleDropdownClick = (option: QuestionType) => {
-    setType(option);
-    setSelected(false);
-  };
+const Dropdown = ({ selected, onClick, setSelected }: DropdownProps) => {
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useOutsideClick(dropdownRef, () => {
@@ -180,7 +152,7 @@ const Dropdown = ({
                   role="option"
                   tabIndex={-1}
                   onClick={() => {
-                    handleDropdownClick(option.value);
+                    setSelected(false);
                   }}
                 >
                   {option.label}
@@ -194,10 +166,28 @@ const Dropdown = ({
   );
 };
 
+const Question = ({ question, isFocused }: QuestionProps) => {
+  switch (question.type) {
+    case 'short':
+      return <ShortQuestion question={question} isFocused={isFocused} />;
+    case 'long':
+      return <LongQuestion question={question} isFocused={isFocused} />;
+    case 'multi':
+      return <MultiQuestion question={question} isFocused={isFocused} />;
+    case 'checkbox':
+      return <CheckBoxQuestion question={question} isFocused={isFocused} />;
+    case 'dropdown':
+      return <DropDownQuestion question={question} isFocused={isFocused} />;
+    default:
+      return null;
+  }
+};
+
 const SurveyQuestion = ({ question, isFocused }: SurveyQuestionProps) => {
-  const [, setType] = useState(question.type);
   const [selected, setSelected] = useState(false);
-  const handleClick = () => {
+  const setSurvey = useSetAtom(surveysAtom);
+
+  const handleClickDropdown = () => {
     setSelected(!selected);
   };
 
@@ -207,8 +197,7 @@ const SurveyQuestion = ({ question, isFocused }: SurveyQuestionProps) => {
         <QuestionTitle>{question.title}</QuestionTitle>
         <Dropdown
           selected={selected}
-          setType={setType}
-          onClick={handleClick}
+          onClick={handleClickDropdown}
           setSelected={setSelected}
         />
       </QuestionHeader>

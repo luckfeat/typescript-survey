@@ -1,11 +1,12 @@
 import { surveysAtom } from '../../stores/survey/atom';
-import { useAtom } from 'jotai';
+import { useAtomValue } from 'jotai';
 import SurveySection from './SurveySection';
 import { useState } from 'react';
 
 const SurveyEditor = () => {
-  const [surveys] = useAtom(surveysAtom);
-  const { surveys: surveyList } = surveys;
+  const survey = useAtomValue(surveysAtom);
+  const surveyList = survey.surveys;
+  const surveyLength = surveyList.length;
   const [focus, setFocus] = useState<HTMLElement | null>(null);
 
   const handleClick = (e: React.MouseEvent) => {
@@ -21,7 +22,12 @@ const SurveyEditor = () => {
     <div>
       {surveyList.map((survey) => {
         return (
-          <SurveySection focus={focus} onClick={handleClick} survey={survey} />
+          <SurveySection
+            length={surveyLength}
+            focus={focus}
+            onClick={handleClick}
+            survey={survey}
+          />
         );
       })}
     </div>

@@ -12,7 +12,7 @@ export const HighlightBar = styled.div`
   left: 0;
   top: 0;
   bottom: 0;
-  width: 4px;
+  width: 6px;
   background-color: transparent;
   border-top-left-radius: 8px;
   border-bottom-left-radius: 8px;
@@ -28,7 +28,7 @@ export const HeaderHighlightBar = styled.div`
   left: 0;
   top: 0;
   bottom: 0;
-  width: 4px;
+  width: 6px;
   background-color: transparent;
   border-top-left-radius: 0px;
   border-bottom-left-radius: 8px;
@@ -62,7 +62,7 @@ export const SurveyQuestionContainer = styled(Container)`
 `;
 
 export const Heading = styled.h1`
-  font-size: 28px;
+  font-size: 34px;
   font-weight: 700;
   margin-bottom: 20px;
   color: #333;
@@ -91,7 +91,7 @@ export const Card = styled.div`
 
 export const Title = styled.input`
   width: calc(100% - 32px);
-  font-size: 28px;
+  font-size: 34px;
   font-weight: 700;
   height: 48px;
   padding-top: 8px;
@@ -100,11 +100,25 @@ export const Title = styled.input`
   font-family: inherit;
   box-sizing: border-box;
   background-color: transparent;
+  background-image: linear-gradient(#007bff, #007bff);
+  background-position: bottom center;
+  background-repeat: no-repeat;
+  background-size: 0 2px;
   color: #333;
+  transition: background-size 0.25s ease;
 
-  &:focus-visible {
+  &[readonly] {
+    border-bottom-color: transparent;
+  }
+
+  &:focus {
     outline: none;
-    border-bottom-color: #007bff;
+    border-bottom-color: transparent;
+    background-size: 100% 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
   }
 `;
 
@@ -118,10 +132,24 @@ export const Description = styled.input`
   font-family: inherit;
   box-sizing: border-box;
   background-color: transparent;
+  background-image: linear-gradient(#007bff, #007bff);
+  background-position: bottom center;
+  background-repeat: no-repeat;
+  background-size: 0 2px;
   color: #4b5563;
+  transition: background-size 0.25s ease;
 
-  &:focus-visible {
+  &[readonly] {
+    border-bottom-color: transparent;
+  }
+
+  &:focus {
     outline: none;
-    border-bottom-color: #007bff;
+    border-bottom-color: transparent;
+    background-size: 100% 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
   }
 `;
