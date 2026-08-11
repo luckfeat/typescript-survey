@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import type { Dispatch, SetStateAction } from 'react';
+import type { SurveyQuestionType } from '../../types';
 import styled from '@emotion/styled';
 import CheckBoxQuestion from './question/CheckBoxQuestion';
 import DropDownQuestion from './question/DropDownQuestion';
@@ -6,6 +8,25 @@ import LongQuestion from './question/LongQuestion';
 import MultiQuestion from './question/MultiQuestion';
 import RatingQuestion from './question/RatingQuestion';
 import ShortQuestion from './question/ShortQuestion';
+import useOutsideClick from '../../hooks/useOutsideClick';
+
+type QuestionType = SurveyQuestionType['type'];
+
+interface QuestionProps {
+  question: SurveyQuestionType;
+  isFocused: boolean;
+}
+
+interface DropdownProps {
+  selected: boolean;
+  setType: Dispatch<SetStateAction<QuestionType>>;
+  onClick: () => void;
+}
+
+interface SurveyQuestionProps {
+  question: SurveyQuestionType;
+  isFocused: boolean;
+}
 
 const dropDownOptions = [
   '체크박스',
@@ -100,8 +121,8 @@ const DropdownItem = styled.li`
   }
 `;
 
-const Question = ({ question, type, isFocused }) => {
-  switch (type) {
+const Question = ({ question, isFocused }: QuestionProps) => {
+  switch (question.type) {
     case 'short':
       return <ShortQuestion question={question} isFocused={isFocused} />;
     case 'long':
@@ -119,9 +140,13 @@ const Question = ({ question, type, isFocused }) => {
   }
 };
 
-const Dropdown = ({ selected, setType, onClick }) => {
+const Dropdown = ({ selected, setType, onClick }: DropdownProps) => {
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useOutsideClick(dropdownRef, () => {});
+
   return (
-    <DropdownContainer>
+    <DropdownContainer ref={dropdownRef}>
       <DropdownWrapper>
         <DropdownTrigger
           type="button"
@@ -147,12 +172,9 @@ const Dropdown = ({ selected, setType, onClick }) => {
   );
 };
 
-const SurveyQuestion = ({ question, isFocused }) => {
+const SurveyQuestion = ({ question, isFocused }: SurveyQuestionProps) => {
   const [type, setType] = useState(question.type);
   const [selected, setSelected] = useState(false);
-  /**
-   * useOutsideClick
-   */
   const handleClick = () => {
     setSelected(!selected);
   };
@@ -163,7 +185,7 @@ const SurveyQuestion = ({ question, isFocused }) => {
         <QuestionTitle>{question.title}</QuestionTitle>
         <Dropdown selected={selected} setType={setType} onClick={handleClick} />
       </QuestionHeader>
-      <Question type={type} question={question} isFocused={isFocused} />
+      <Question question={question} isFocused={isFocused} />
     </>
   );
 };
