@@ -9,7 +9,6 @@ const useOutsideClick = (
       const element = ref.current;
 
       if (element && !element.contains(e.target as Node)) {
-        console.log('outside');
         outsideClick();
       }
     };
@@ -17,7 +16,6 @@ const useOutsideClick = (
     document.addEventListener('pointerdown', pointerDownCallback);
 
     return () => {
-      console.log('erase');
       document.removeEventListener('pointerdown', pointerDownCallback);
     };
   }, [ref, outsideClick]);

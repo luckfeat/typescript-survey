@@ -35,11 +35,6 @@ export type SurveyQuestionType =
       title: string;
       type: 'dropdown';
       content: { options: string[] };
-    }
-  | {
-      title: string;
-      type: 'rating';
-      content: { start: number; end: number };
     };
 
 export type QuestionByType<T extends SurveyQuestionType['type']> = Extract<

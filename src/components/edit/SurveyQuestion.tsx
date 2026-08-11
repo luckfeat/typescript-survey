@@ -20,6 +20,7 @@ interface QuestionProps {
 interface DropdownProps {
   selected: boolean;
   setType: Dispatch<SetStateAction<QuestionType>>;
+  setSelected: Dispatch<SetStateAction<boolean>>;
   onClick: () => void;
 }
 
@@ -28,13 +29,17 @@ interface SurveyQuestionProps {
   isFocused: boolean;
 }
 
-const dropDownOptions = [
-  '체크박스',
-  '드롭다운',
-  '객관식',
-  '단답형',
-  '장문형',
-  '등급',
+interface DropdownOption {
+  label: string;
+  value: QuestionType;
+}
+
+const dropdownOptions: DropdownOption[] = [
+  { label: '단답형', value: 'short' },
+  { label: '장문형', value: 'long' },
+  { label: '객관식 질문', value: 'multi' },
+  { label: '체크박스', value: 'checkbox' },
+  { label: '드롭다운', value: 'dropdown' },
 ];
 
 const QuestionHeader = styled.div`
@@ -140,10 +145,21 @@ const Question = ({ question, isFocused }: QuestionProps) => {
   }
 };
 
-const Dropdown = ({ selected, setType, onClick }: DropdownProps) => {
+const Dropdown = ({
+  selected,
+  setType,
+  onClick,
+  setSelected,
+}: DropdownProps) => {
+  const handleDropdownClick = (option: QuestionType) => {
+    setType(option);
+    setSelected(false);
+  };
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  useOutsideClick(dropdownRef, () => {});
+  useOutsideClick(dropdownRef, () => {
+    setSelected(false);
+  });
 
   return (
     <DropdownContainer ref={dropdownRef}>
@@ -158,10 +174,16 @@ const Dropdown = ({ selected, setType, onClick }: DropdownProps) => {
         </DropdownTrigger>
         {selected && (
           <DropdownMenu role="listbox">
-            {dropDownOptions.map((option) => {
+            {dropdownOptions.map((option) => {
               return (
-                <DropdownItem role="option" tabIndex={-1}>
-                  {option}
+                <DropdownItem
+                  role="option"
+                  tabIndex={-1}
+                  onClick={() => {
+                    handleDropdownClick(option.value);
+                  }}
+                >
+                  {option.label}
                 </DropdownItem>
               );
             })}
@@ -173,7 +195,7 @@ const Dropdown = ({ selected, setType, onClick }: DropdownProps) => {
 };
 
 const SurveyQuestion = ({ question, isFocused }: SurveyQuestionProps) => {
-  const [type, setType] = useState(question.type);
+  const [, setType] = useState(question.type);
   const [selected, setSelected] = useState(false);
   const handleClick = () => {
     setSelected(!selected);
@@ -183,7 +205,12 @@ const SurveyQuestion = ({ question, isFocused }: SurveyQuestionProps) => {
     <>
       <QuestionHeader>
         <QuestionTitle>{question.title}</QuestionTitle>
-        <Dropdown selected={selected} setType={setType} onClick={handleClick} />
+        <Dropdown
+          selected={selected}
+          setType={setType}
+          onClick={handleClick}
+          setSelected={setSelected}
+        />
       </QuestionHeader>
       <Question question={question} isFocused={isFocused} />
     </>
