@@ -55,7 +55,12 @@ const SurveySection = ({
             data-container-id={questionContainerId}
           >
             <HighlightBar className={isQuestionFocused ? 'active' : ''} />
-            <SurveyQuestion question={question} isFocused={isQuestionFocused} />
+            <SurveyQuestion
+              sectionIndex={sectionIndex}
+              questionIndex={index}
+              question={question}
+              isFocused={isQuestionFocused}
+            />
           </SurveyQuestionContainer>
         );
       })}

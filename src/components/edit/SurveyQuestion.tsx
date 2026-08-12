@@ -21,17 +21,26 @@ import type { LucideIcon } from 'lucide-react';
 type QuestionType = SurveyQuestionType['type'];
 
 interface QuestionProps {
-  question: SurveyQuestionType;
+  type: QuestionType;
   isFocused: boolean;
 }
 
 interface DropdownProps {
+  sectionIndex: number;
+  questionIndex: number;
   selected: boolean;
   setSelected: Dispatch<SetStateAction<boolean>>;
   onClick: () => void;
+  changeQuestionType: (
+    sectionIndex: number,
+    questionIndex: number,
+    newType: QuestionType,
+  ) => void;
 }
 
 interface SurveyQuestionProps {
+  sectionIndex: number;
+  questionIndex: number;
   question: SurveyQuestionType;
   isFocused: boolean;
 }
@@ -148,10 +157,12 @@ const DropdownIcon = styled.span`
 `;
 
 const Dropdown = ({
+  sectionIndex,
+  questionIndex,
   selected,
   onClick,
   setSelected,
-  setType,
+  changeQuestionType,
 }: DropdownProps) => {
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -165,7 +176,7 @@ const Dropdown = ({
         <DropdownTrigger
           type="button"
           aria-haspopup="listbox"
-          aria-expanded="false"
+          aria-expanded={selected}
           onClick={onClick}
         >
           Option 1
@@ -182,7 +193,11 @@ const Dropdown = ({
                   tabIndex={-1}
                   onClick={() => {
                     setSelected(false);
-                    setType(option.value);
+                    changeQuestionType(
+                      sectionIndex,
+                      questionIndex,
+                      option.value,
+                    );
                   }}
                 >
                   <DropdownIcon aria-hidden="true">
@@ -219,15 +234,21 @@ const Question = ({ type, isFocused }: QuestionProps) => {
   }
 };
 
-const SurveyQuestion = ({ question, isFocused }: SurveyQuestionProps) => {
+const SurveyQuestion = ({
+  sectionIndex,
+  questionIndex,
+  question,
+  isFocused,
+}: SurveyQuestionProps) => {
   const [selected, setSelected] = useState(false);
   /**
    *
    */
-  const [type, setType] = useState('short');
+
+  const { changeQuestionType } = useSurveyActions();
 
   const handleClickDropdown = () => {
-    setSelected(!selected);
+    setSelected((previous) => !previous);
   };
 
   return (
@@ -238,7 +259,9 @@ const SurveyQuestion = ({ question, isFocused }: SurveyQuestionProps) => {
           selected={selected}
           onClick={handleClickDropdown}
           setSelected={setSelected}
-          setType={setType}
+          sectionIndex={sectionIndex}
+          questionIndex={questionIndex}
+          changeQuestionType={changeQuestionType}
         />
       </QuestionHeader>
       <Question type={question.type} isFocused={isFocused} />
