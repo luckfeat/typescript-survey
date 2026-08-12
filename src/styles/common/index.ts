@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import Input from '../../components/common/Input';
 
 export const Container = styled.div`
   width: 100%;
@@ -89,12 +90,8 @@ export const Card = styled.div`
   }
 `;
 
-export const Title = styled.input`
+const SurveyInput = styled(Input)`
   width: calc(100% - 32px);
-  font-size: 34px;
-  font-weight: 700;
-  height: 48px;
-  padding-top: 8px;
   border: none;
   border-bottom: 1px solid #e0e0e0;
   font-family: inherit;
@@ -122,34 +119,17 @@ export const Title = styled.input`
   }
 `;
 
-export const Description = styled.input`
-  width: calc(100% - 32px);
+export const Title = styled(SurveyInput)`
+  height: 48px;
+  padding-top: 8px;
+  font-size: 34px;
+  font-weight: 700;
+  color: #333;
+`;
+
+export const Description = styled(SurveyInput)`
   font-size: 14px;
   margin-bottom: 16px;
   padding: 8px 0;
-  border: none;
-  border-bottom: 1px solid #e0e0e0;
-  font-family: inherit;
-  box-sizing: border-box;
-  background-color: transparent;
-  background-image: linear-gradient(#007bff, #007bff);
-  background-position: bottom center;
-  background-repeat: no-repeat;
-  background-size: 0 2px;
   color: #4b5563;
-  transition: background-size 0.25s ease;
-
-  &[readonly] {
-    border-bottom-color: transparent;
-  }
-
-  &:focus {
-    outline: none;
-    border-bottom-color: transparent;
-    background-size: 100% 2px;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    transition: none;
-  }
 `;

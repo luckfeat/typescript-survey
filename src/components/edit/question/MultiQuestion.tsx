@@ -1,24 +1,14 @@
 import type { QuestionByType } from '../../../types';
 
 interface MultiQuestionProps {
-  question: QuestionByType<'multi'>;
+  // question: QuestionByType<'multi'>;
   isFocused: boolean;
 }
 
-const MultiQuestion = ({ question, isFocused }: MultiQuestionProps) => {
+const MultiQuestion = ({ isFocused }: MultiQuestionProps) => {
   return (
     <>
-      {isFocused ? (
-        <></>
-      ) : (
-        <>
-          <ul>
-            {question.content.options.map((option) => (
-              <li key={option}>{option}</li>
-            ))}
-          </ul>
-        </>
-      )}
+      <div>multi</div>
     </>
   );
 };

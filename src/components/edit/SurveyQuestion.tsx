@@ -1,6 +1,4 @@
 import { useRef, useState } from 'react';
-import { useSetAtom } from 'jotai';
-import { surveysAtom } from '../../stores/survey/atom';
 import styled from '@emotion/styled';
 import CheckBoxQuestion from './question/CheckBoxQuestion';
 import DropDownQuestion from './question/DropDownQuestion';
@@ -10,6 +8,15 @@ import ShortQuestion from './question/ShortQuestion';
 import useOutsideClick from '../../hooks/useOutsideClick';
 import type { Dispatch, SetStateAction } from 'react';
 import type { SurveyQuestionType } from '../../types';
+import useSurveyActions from '../../hooks/useSurveyActions';
+import {
+  AlignLeft,
+  CheckSquare2,
+  ChevronDownSquare,
+  CircleDot,
+  TextCursorInput,
+} from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 
 type QuestionType = SurveyQuestionType['type'];
 
@@ -32,14 +39,15 @@ interface SurveyQuestionProps {
 interface DropdownOption {
   label: string;
   value: QuestionType;
+  icon: LucideIcon;
 }
 
 const dropdownOptions: DropdownOption[] = [
-  { label: '단답형', value: 'short' },
-  { label: '장문형', value: 'long' },
-  { label: '객관식 질문', value: 'multi' },
-  { label: '체크박스', value: 'checkbox' },
-  { label: '드롭다운', value: 'dropdown' },
+  { label: '단답형', value: 'short', icon: TextCursorInput },
+  { label: '장문형', value: 'long', icon: AlignLeft },
+  { label: '객관식 질문', value: 'multi', icon: CircleDot },
+  { label: '체크박스', value: 'checkbox', icon: CheckSquare2 },
+  { label: '드롭다운', value: 'dropdown', icon: ChevronDownSquare },
 ];
 
 const QuestionHeader = styled.div`
@@ -114,6 +122,9 @@ const DropdownMenu = styled.ul`
 `;
 
 const DropdownItem = styled.li`
+  display: flex;
+  align-items: center;
+  gap: 10px;
   padding: 8px 12px;
   font-size: 13px;
   color: #374151;
@@ -123,10 +134,25 @@ const DropdownItem = styled.li`
   &:focus-visible {
     outline: none;
     background-color: #f3f4f6;
+    color: #007bff;
   }
 `;
 
-const Dropdown = ({ selected, onClick, setSelected }: DropdownProps) => {
+const DropdownIcon = styled.span`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 18px;
+  color: inherit;
+  transition: color 0.15s ease;
+`;
+
+const Dropdown = ({
+  selected,
+  onClick,
+  setSelected,
+  setType,
+}: DropdownProps) => {
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useOutsideClick(dropdownRef, () => {
@@ -147,14 +173,21 @@ const Dropdown = ({ selected, onClick, setSelected }: DropdownProps) => {
         {selected && (
           <DropdownMenu role="listbox">
             {dropdownOptions.map((option) => {
+              const Icon = option.icon;
+
               return (
                 <DropdownItem
+                  key={option.value}
                   role="option"
                   tabIndex={-1}
                   onClick={() => {
                     setSelected(false);
+                    setType(option.value);
                   }}
                 >
+                  <DropdownIcon aria-hidden="true">
+                    <Icon size={17} strokeWidth={1.8} />
+                  </DropdownIcon>
                   {option.label}
                 </DropdownItem>
               );
@@ -166,18 +199,21 @@ const Dropdown = ({ selected, onClick, setSelected }: DropdownProps) => {
   );
 };
 
-const Question = ({ question, isFocused }: QuestionProps) => {
-  switch (question.type) {
+/**
+ * Question Body Editor
+ */
+const Question = ({ type, isFocused }: QuestionProps) => {
+  switch (type) {
     case 'short':
-      return <ShortQuestion question={question} isFocused={isFocused} />;
+      return <ShortQuestion isFocused={isFocused} />;
     case 'long':
-      return <LongQuestion question={question} isFocused={isFocused} />;
+      return <LongQuestion isFocused={isFocused} />;
     case 'multi':
-      return <MultiQuestion question={question} isFocused={isFocused} />;
+      return <MultiQuestion isFocused={isFocused} />;
     case 'checkbox':
-      return <CheckBoxQuestion question={question} isFocused={isFocused} />;
+      return <CheckBoxQuestion isFocused={isFocused} />;
     case 'dropdown':
-      return <DropDownQuestion question={question} isFocused={isFocused} />;
+      return <DropDownQuestion isFocused={isFocused} />;
     default:
       return null;
   }
@@ -185,7 +221,10 @@ const Question = ({ question, isFocused }: QuestionProps) => {
 
 const SurveyQuestion = ({ question, isFocused }: SurveyQuestionProps) => {
   const [selected, setSelected] = useState(false);
-  const setSurvey = useSetAtom(surveysAtom);
+  /**
+   *
+   */
+  const [type, setType] = useState('short');
 
   const handleClickDropdown = () => {
     setSelected(!selected);
@@ -199,9 +238,10 @@ const SurveyQuestion = ({ question, isFocused }: SurveyQuestionProps) => {
           selected={selected}
           onClick={handleClickDropdown}
           setSelected={setSelected}
+          setType={setType}
         />
       </QuestionHeader>
-      <Question question={question} isFocused={isFocused} />
+      <Question type={question.type} isFocused={isFocused} />
     </>
   );
 };

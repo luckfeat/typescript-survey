@@ -2,7 +2,7 @@ import { atom } from 'jotai';
 import type { Survey } from '../../types';
 
 export const surveysAtom = atom<Survey>({
-  id: '1234',
+  id: '0001',
   surveys: [
     {
       sectionIndex: 1,

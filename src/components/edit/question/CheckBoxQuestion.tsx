@@ -1,29 +1,22 @@
 import type { QuestionByType } from '../../../types';
 
 interface CheckBoxQuestionProps {
-  question: QuestionByType<'checkbox'>;
+  // question: QuestionByType<'checkbox'>;
   isFocused: boolean;
 }
 
-const CheckBoxQuestion = ({ question, isFocused }: CheckBoxQuestionProps) => {
+const CheckBoxQuestion = ({ isFocused }: CheckBoxQuestionProps) => {
   return (
     <>
-      {isFocused ? (
-        <></>
-      ) : (
-        <>
-          <ul>
-            {question.content.options.map((option) => (
+      {/* {question.content.options.map((option) => (
               <li key={option}>
                 <label>
                   <input type="checkbox" />
                   {option}
                 </label>
               </li>
-            ))}
-          </ul>
-        </>
-      )}
+            ))} */}
+      <div>check box</div>
     </>
   );
 };

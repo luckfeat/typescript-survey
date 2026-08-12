@@ -1,20 +1,15 @@
 import type { QuestionByType } from '../../../types';
+import Input from '../../common/Input';
 
 interface ShortQuestionProps {
-  question: QuestionByType<'short'>;
+  // question: QuestionByType<'short'>;
   isFocused: boolean;
 }
 
-const ShortQuestion = ({ question, isFocused }: ShortQuestionProps) => {
+const ShortQuestion = ({ isFocused }: ShortQuestionProps) => {
   return (
     <>
-      {isFocused ? (
-        <></>
-      ) : (
-        <>
-          <div>{question.content.shortText}</div>
-        </>
-      )}
+      <Input />
     </>
   );
 };

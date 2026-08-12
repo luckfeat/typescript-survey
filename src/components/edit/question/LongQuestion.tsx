@@ -1,20 +1,14 @@
 import type { QuestionByType } from '../../../types';
 
 interface LongQuestionProps {
-  question: QuestionByType<'long'>;
+  // question: QuestionByType<'long'>;
   isFocused: boolean;
 }
 
-const LongQuestion = ({ question, isFocused }: LongQuestionProps) => {
+const LongQuestion = ({ isFocused }: LongQuestionProps) => {
   return (
     <>
-      {isFocused ? (
-        <></>
-      ) : (
-        <>
-          <div>{question.content.longText}</div>
-        </>
-      )}
+      <div>long</div>
     </>
   );
 };
