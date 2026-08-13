@@ -17,6 +17,7 @@ import {
   TextCursorInput,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
+import Input from '../common/Input';
 
 type QuestionType = SurveyQuestionType['type'];
 
@@ -74,6 +75,40 @@ const QuestionTitle = styled.h3`
   color: #1f2937;
   line-height: 1.5;
   overflow-wrap: anywhere;
+`;
+
+const QuestionTitleInput = styled(Input)`
+  flex: 1;
+  min-width: 0;
+  padding: 6px 0;
+  border: none;
+  border-bottom: 1px solid transparent;
+  box-sizing: border-box;
+  background-color: transparent;
+  background-image: linear-gradient(#007bff, #007bff);
+  background-position: bottom center;
+  background-repeat: no-repeat;
+  background-size: 0 2px;
+  color: #1f2937;
+  font: inherit;
+  font-size: 1.17em;
+  font-weight: 700;
+  line-height: 1.5;
+  transition: background-size 0.25s ease;
+
+  &:focus {
+    outline: none;
+    background-size: 100% 2px;
+  }
+
+  &::placeholder {
+    color: #6b7280;
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
 `;
 
 const DropdownContainer = styled.div`
@@ -254,7 +289,11 @@ const SurveyQuestion = ({
   return (
     <>
       <QuestionHeader>
-        <QuestionTitle>{question.title}</QuestionTitle>
+        {isFocused ? (
+          <QuestionTitleInput placeholder={question.title} />
+        ) : (
+          <QuestionTitle>{question.title}</QuestionTitle>
+        )}
         <Dropdown
           selected={selected}
           onClick={handleClickDropdown}

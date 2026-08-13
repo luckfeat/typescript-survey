@@ -1,15 +1,18 @@
 import type { QuestionByType } from '../../../types';
-import Input from '../../common/Input';
+import {
+  QuestionAnswerInput,
+  QuestionAnswerText,
+} from '../../../styles/common';
 
 interface ShortQuestionProps {
-  // question: QuestionByType<'short'>;
+  question: QuestionByType<'short'>;
   isFocused: boolean;
 }
 
-const ShortQuestion = ({ isFocused }: ShortQuestionProps) => {
+const ShortQuestion = ({ question, isFocused }: ShortQuestionProps) => {
   return (
     <>
-      <Input />
+      <QuestionAnswerText>단답형 텍스트</QuestionAnswerText>
     </>
   );
 };

@@ -133,3 +133,30 @@ export const Description = styled(SurveyInput)`
   padding: 8px 0;
   color: #4b5563;
 `;
+
+export const QuestionAnswerInput = styled(SurveyInput)`
+  width: 100%;
+  margin-top: 16px;
+  padding: 10px 0 8px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #374151;
+
+  &::placeholder {
+    color: #6b7280;
+    opacity: 1;
+  }
+`;
+
+export const QuestionAnswerText = styled.p`
+  width: 100%;
+  margin: 16px 0 0;
+  padding: 10px 0 8px;
+  border-bottom: 1px solid transparent;
+  box-sizing: border-box;
+  color: #4b5563;
+  font-size: 15px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+`;
