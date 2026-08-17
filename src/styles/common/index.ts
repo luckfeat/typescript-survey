@@ -152,9 +152,9 @@ export const QuestionAnswerText = styled.p`
   width: 100%;
   margin: 16px 0 0;
   padding: 10px 0 8px;
-  border-bottom: 1px solid transparent;
+  border-bottom: 1px dotted #9ca3af;
   box-sizing: border-box;
-  color: #4b5563;
+  color: #6b7280;
   font-size: 15px;
   line-height: 1.6;
   overflow-wrap: anywhere;

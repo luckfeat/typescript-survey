@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import CheckBoxQuestion from './question/CheckBoxQuestion';
 import DropDownQuestion from './question/DropDownQuestion';
@@ -27,10 +27,12 @@ interface QuestionProps {
 }
 
 interface DropdownProps {
+  option: QuestionType;
   sectionIndex: number;
   questionIndex: number;
   selected: boolean;
   setSelected: Dispatch<SetStateAction<boolean>>;
+  setOption: Dispatch<SetStateAction<QuestionType>>;
   onClick: () => void;
   changeQuestionType: (
     sectionIndex: number,
@@ -198,6 +200,8 @@ const Dropdown = ({
   onClick,
   setSelected,
   changeQuestionType,
+  option,
+  setOption,
 }: DropdownProps) => {
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -214,7 +218,7 @@ const Dropdown = ({
           aria-expanded={selected}
           onClick={onClick}
         >
-          Option 1
+          {dropdownOptions.find((opt) => opt.value === option)?.label ?? ''}
         </DropdownTrigger>
         {selected && (
           <DropdownMenu role="listbox">
@@ -233,6 +237,7 @@ const Dropdown = ({
                       questionIndex,
                       option.value,
                     );
+                    setOption(option.value);
                   }}
                 >
                   <DropdownIcon aria-hidden="true">
@@ -249,9 +254,6 @@ const Dropdown = ({
   );
 };
 
-/**
- * Question Body Editor
- */
 const Question = ({ type, isFocused }: QuestionProps) => {
   switch (type) {
     case 'short':
@@ -276,21 +278,29 @@ const SurveyQuestion = ({
   isFocused,
 }: SurveyQuestionProps) => {
   const [selected, setSelected] = useState(false);
-  /**
-   *
-   */
-
+  const [option, setOption] = useState(question.type);
   const { changeQuestionType } = useSurveyActions();
 
   const handleClickDropdown = () => {
     setSelected((previous) => !previous);
   };
 
+  const titleInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (isFocused) {
+      titleInputRef.current?.focus();
+    }
+  }, [isFocused]);
+
   return (
     <>
       <QuestionHeader>
         {isFocused ? (
-          <QuestionTitleInput placeholder={question.title} />
+          <QuestionTitleInput
+            ref={titleInputRef}
+            placeholder={question.title}
+          />
         ) : (
           <QuestionTitle>{question.title}</QuestionTitle>
         )}
@@ -301,6 +311,8 @@ const SurveyQuestion = ({
           sectionIndex={sectionIndex}
           questionIndex={questionIndex}
           changeQuestionType={changeQuestionType}
+          option={option}
+          setOption={setOption}
         />
       </QuestionHeader>
       <Question type={question.type} isFocused={isFocused} />
